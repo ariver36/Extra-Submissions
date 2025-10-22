@@ -1,0 +1,25 @@
+#include <stack>
+
+class Solution {
+public:
+    vector<int> dailyTemperatures(vector<int>& temperatures) {
+        vector<int> output;
+        output.resize(temperatures.size(), 0);
+        stack<int> indices;
+
+        for (long long unsigned int i = 0; i < temperatures.size(); i++) {
+            if (indices.empty()) {
+                indices.push(i);
+            }
+            else {
+                while (not indices.empty() && (temperatures[i] > temperatures[indices.top()])) {
+                    output[indices.top()] = i - indices.top();
+                    indices.pop();
+                }
+                indices.push(i);
+            }
+        }
+
+        return output;
+    }
+};
