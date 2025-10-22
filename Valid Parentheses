@@ -1,0 +1,43 @@
+#include <stack>
+#include <string>
+#include <iostream>
+
+using namespace std;
+
+class Solution {
+public:
+    bool isValid(string s) {
+        stack <char> parenStack;
+
+        char openParenArray[3] = {'(', '[', '{'};
+        char closedParenArray[3] = {')', ']', '}'};
+
+        for (int i = 0; i < s.size(); i++) {
+            bool isOpenParen = false;
+            for (int j = 0; j < 3; j++) {
+                if (openParenArray[j] == s[i]) {
+                    parenStack.push(s[i]);
+                    break;
+                }
+                else if (closedParenArray[j] == s[i]) {
+                    if (parenStack.empty()) return false;
+                    if (parenStack.top() == openParenArray[j]) {
+                        parenStack.pop();
+                        break;
+                    }
+
+                    else {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        if (parenStack.empty()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+};
