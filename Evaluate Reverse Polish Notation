@@ -1,0 +1,41 @@
+#include <iostream>
+#include <stack>
+
+using namespace std;
+
+class Solution {
+public:
+    int evalRPN(vector<string>& tokens) {
+        stack <string> numStack;
+
+        for (auto &token : tokens) {
+            // If the token is a number
+            if (token != "+" && token != "-" && token != "*" && token != "/") {
+                numStack.push(token);
+            }
+            // If the token is an operator
+            else {
+                int answer = 0;
+                int numOne = stoi(numStack.top());
+                numStack.pop();
+                int numTwo = stoi(numStack.top());
+                numStack.pop();
+                if (token == "+") {
+                    answer = numTwo + numOne;
+                }
+                else if (token == "-") {
+                    answer = numTwo - numOne;
+                }
+                else if (token == "*") {
+                    answer = numTwo * numOne;
+                }
+                else if (token == "/") {
+                    answer = numTwo / numOne;
+                }
+                numStack.push(to_string(answer));
+            }
+        }
+
+        return stoi(numStack.top());
+    }
+};
